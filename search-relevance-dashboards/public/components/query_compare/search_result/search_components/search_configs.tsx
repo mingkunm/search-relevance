@@ -16,10 +16,10 @@ import {
   EuiButton,
 } from '@elastic/eui';
 import React from 'react';
-import '../../../ace-themes/sql_console';
+import '../../../../ace-themes/sql_console';
 
 interface SearchConfigsPanelProps {
-  isCollapsed: Boolean;
+  isCollapsed: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>, setter: any) => void;
   searchIndex1: string;
   searchIndex2: string;

@@ -6,9 +6,9 @@
 import './result_grid.scss';
 import { EuiButtonIcon, EuiLink, EuiPanel, EuiText } from '@elastic/eui';
 import _, { uniqueId } from 'lodash';
-import { IDocType } from '../../../../common';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { IDocType } from '../../../../../common';
 
 interface ResultGridComponentProps {
   querqyResult: any;
