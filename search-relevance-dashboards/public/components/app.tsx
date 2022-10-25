@@ -6,11 +6,11 @@
 import React from 'react';
 import { I18nProvider } from '@osd/i18n/react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
-import { CoreStart, Toast } from '../../../../src/core/public';
-import { NavigationPublicPluginStart } from '../../../../src/plugins/navigation/public';
-import { Home as QueryCompareHome } from './query_compare/home';
 import { useState } from 'react';
 import { EuiGlobalToastList } from '@elastic/eui';
+import { CoreStart, Toast } from '../../../../../src/core/public';
+import { NavigationPublicPluginStart } from '../../../../../src/plugins/navigation/public';
+import { Home as QueryCompareHome } from './query_compare/home';
 import { PLUGIN_NAME } from '../../common';
 
 interface SearchRelevanceAppDeps {

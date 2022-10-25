@@ -5,7 +5,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { NavigationPublicPluginStart } from 'src/plugins/navigation/public';
-import { CoreStart, ChromeBreadcrumb } from '../../../../../src/core/public';
+import { CoreStart, ChromeBreadcrumb } from '../../../../../../src/core/public';
 import '../../ace-themes/sql_console';
 import { CreateIndex } from './create_index';
 import { SearchResult } from './search_result';
@@ -39,7 +39,7 @@ export const Home = ({
 
   // TODO: Get index api
   useEffect(() => {
-    setHasIndex(false);
+    setHasIndex(true);
   }, []);
 
   return (
