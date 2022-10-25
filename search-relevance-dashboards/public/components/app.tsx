@@ -12,6 +12,7 @@ import { CoreStart, Toast } from '../../../../../src/core/public';
 import { NavigationPublicPluginStart } from '../../../../../src/plugins/navigation/public';
 import { Home as QueryCompareHome } from './query_compare/home';
 import { PLUGIN_NAME } from '../../common';
+import { SearchRelevanceContextProvider } from '../contexts';
 
 interface SearchRelevanceAppDeps {
   notifications: CoreStart['notifications'];
@@ -40,34 +41,36 @@ export const SearchRelevanceApp = ({
   return (
     <HashRouter>
       <I18nProvider>
-        <>
-          <EuiGlobalToastList
-            toasts={toasts}
-            dismissToast={(removedToast) => {
-              setToasts(toasts.filter((toast) => toast.id !== removedToast.id));
-            }}
-            side={toastRightSide ? 'right' : 'left'}
-            toastLifeTimeMs={6000}
-          />
-          <Switch>
-            <Route
-              path={['/']}
-              render={(props) => {
-                return (
-                  <QueryCompareHome
-                    parentBreadCrumbs={parentBreadCrumbs}
-                    notifications={notifications}
-                    http={http}
-                    navigation={navigation}
-                    setBreadcrumbs={chrome.setBreadcrumbs}
-                    setToast={setToast}
-                    chrome={chrome}
-                  />
-                );
+        <SearchRelevanceContextProvider>
+          <>
+            <EuiGlobalToastList
+              toasts={toasts}
+              dismissToast={(removedToast) => {
+                setToasts(toasts.filter((toast) => toast.id !== removedToast.id));
               }}
+              side={toastRightSide ? 'right' : 'left'}
+              toastLifeTimeMs={6000}
             />
-          </Switch>
-        </>
+            <Switch>
+              <Route
+                path={['/']}
+                render={(props) => {
+                  return (
+                    <QueryCompareHome
+                      parentBreadCrumbs={parentBreadCrumbs}
+                      notifications={notifications}
+                      http={http}
+                      navigation={navigation}
+                      setBreadcrumbs={chrome.setBreadcrumbs}
+                      setToast={setToast}
+                      chrome={chrome}
+                    />
+                  );
+                }}
+              />
+            </Switch>
+          </>
+        </SearchRelevanceContextProvider>
       </I18nProvider>
     </HashRouter>
   );
