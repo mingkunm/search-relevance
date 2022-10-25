@@ -3,12 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationPublicPluginStart } from 'src/plugins/navigation/public';
 import { CoreStart, ChromeBreadcrumb } from '../../../../../../src/core/public';
 import '../../ace-themes/sql_console';
 import { CreateIndex } from './create_index';
 import { SearchResult } from './search_result';
+import { useSearchRelevanceContext } from '../../contexts';
+import { DocumentsIndex } from '../../types/index';
 
 import './home.scss';
 
@@ -31,20 +33,22 @@ export const Home = ({
   setToast,
   chrome,
 }: QueryExplorerProps) => {
-  const [hasIndex, setHasIndex] = useState(false);
+  const { documentsIndexes, setDocumentsIndexes } = useSearchRelevanceContext();
 
   useEffect(() => {
     setBreadcrumbs([...parentBreadCrumbs]);
-  }, []);
+  }, [setBreadcrumbs, parentBreadCrumbs]);
 
-  // TODO: Get index api
+  // Get Indexes
   useEffect(() => {
-    setHasIndex(true);
-  }, []);
+    http.get('/api/relevancy/search/indexes').then((res: DocumentsIndex[]) => {
+      setDocumentsIndexes(res);
+    });
+  }, [http, setDocumentsIndexes]);
 
   return (
     <div className="search-relevance">
-      {hasIndex ? <SearchResult http={http} /> : <CreateIndex />}
+      {documentsIndexes.length ? <SearchResult http={http} /> : <CreateIndex />}
     </div>
   );
 };
