@@ -5,12 +5,14 @@
 
 import { schema } from '@osd/config-schema';
 import { RequestParams } from '@opensearch-project/opensearch';
+
 import { IRouter } from '../../../../../src/core/server';
+import { ServiceEndpoints } from '../../public/constants';
 
 export function registerDslRoute({ router }: { router: IRouter }) {
   router.post(
     {
-      path: `/api/relevancy/search`,
+      path: ServiceEndpoints.GetSearchResults,
       validate: { body: schema.any() },
     },
     async (context, request, response) => {
@@ -40,7 +42,7 @@ export function registerDslRoute({ router }: { router: IRouter }) {
 
   router.get(
     {
-      path: `/api/relevancy/search/indexes`,
+      path: ServiceEndpoints.GetIndexes,
       validate: {},
     },
     async (context, request, response) => {

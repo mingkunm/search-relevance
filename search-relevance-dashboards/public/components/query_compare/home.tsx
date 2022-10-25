@@ -11,6 +11,7 @@ import { CreateIndex } from './create_index';
 import { SearchResult } from './search_result';
 import { useSearchRelevanceContext } from '../../contexts';
 import { DocumentsIndex } from '../../types/index';
+import { ServiceEndpoints } from '../../constants';
 
 import './home.scss';
 
@@ -41,7 +42,7 @@ export const Home = ({
 
   // Get Indexes
   useEffect(() => {
-    http.get('/api/relevancy/search/indexes').then((res: DocumentsIndex[]) => {
+    http.get(ServiceEndpoints.GetIndexes).then((res: DocumentsIndex[]) => {
       setDocumentsIndexes(res);
     });
   }, [http, setDocumentsIndexes]);

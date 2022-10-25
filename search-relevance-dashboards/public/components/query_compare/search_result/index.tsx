@@ -25,6 +25,7 @@ import { CoreStart, ChromeBreadcrumb } from '../../../../../../../src/core/publi
 import { SearchConfigsPanel } from './search_components/search_configs';
 import { SearchInputBar } from './search_components/search_bar';
 import { SearchResultTable } from './result_components/search_result_table';
+import { ServiceEndpoints } from '../../../constants';
 
 const defaultQuery = JSON.stringify({
   query: {
@@ -52,7 +53,7 @@ export const SearchResult = ({ http }: SearchResultProps) => {
     const jsonQuery1 = JSON.parse(queryString1.replace(/%searchInput%/g, searchBarValue));
     const jsonQuery2 = JSON.parse(queryString2.replace(/%searchInput%/g, searchBarValue));
     http
-      .post('/api/relevancy/search', {
+      .post(ServiceEndpoints.GetSearchResults, {
         body: JSON.stringify({ index: searchIndex1, ...jsonQuery1 }),
       })
       .then((res) => {
@@ -64,7 +65,7 @@ export const SearchResult = ({ http }: SearchResultProps) => {
       });
 
     http
-      .post('/api/relevancy/search', {
+      .post(ServiceEndpoints.GetSearchResults, {
         body: JSON.stringify({ index: searchIndex2, ...jsonQuery2 }),
       })
       .then((res) => {
