@@ -1,4 +1,4 @@
-export interface Index {
+export interface DocumentsIndex {
   'docs.count': string;
   'docs.deleted': string;
   health: 'green' | 'yellow';
