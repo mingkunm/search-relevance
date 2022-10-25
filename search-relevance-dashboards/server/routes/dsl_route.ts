@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { IRouter } from '../../../../src/core/server';
 import { schema } from '@osd/config-schema';
 import { RequestParams } from '@opensearch-project/opensearch';
+import { IRouter } from '../../../../../src/core/server';
 
 export function registerDslRoute({ router }: { router: IRouter }) {
   router.post(
@@ -16,13 +16,40 @@ export function registerDslRoute({ router }: { router: IRouter }) {
     async (context, request, response) => {
       const { index, size, ...rest } = request.body;
       const params: RequestParams.Search = {
-        index: index,
+        index,
         size,
         body: rest,
       };
       try {
         const resp = await context.core.opensearch.legacy.client.callAsCurrentUser(
           'search',
+          params
+        );
+        return response.ok({
+          body: resp,
+        });
+      } catch (error) {
+        if (error.statusCode !== 404) console.error(error);
+        return response.custom({
+          statusCode: error.statusCode || 500,
+          body: error.message,
+        });
+      }
+    }
+  );
+
+  router.get(
+    {
+      path: `/api/relevancy/search/indexes`,
+      validate: {},
+    },
+    async (context, request, response) => {
+      const params = {
+        format: 'json',
+      };
+      try {
+        const resp = await context.core.opensearch.legacy.client.callAsCurrentUser(
+          'cat.indices',
           params
         );
         return response.ok({
